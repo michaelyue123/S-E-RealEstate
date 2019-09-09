@@ -1,28 +1,10 @@
-import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.sql.*;
-import java.util.Scanner;
+package application;
 
-public class RealEstate {
-    private HashMap<Integer, String> suburb_list = new HashMap<Integer, String>();
-    private Scanner sc = new Scanner(System.in);
+import java.sql.*;
+
+public class LinkDatabase {
     private static Connection connection = null;
 
-    public RealEstate() {
-
-    }
-
-    public void startRealEstate(){
-        connectJDBCToAWSEC2();
-
-        loadSuburb();
-
-
-    }
-
-    //this is connect class, this is used to connect to aws server where the database is built.
     public static void connectJDBCToAWSEC2() {
 
         System.out.println("----MySQL JDBC Connection Testing -------");
@@ -49,23 +31,6 @@ public class RealEstate {
             System.out.println("FAILURE! Failed to make connection!");
         }
 
-    }
-
-    public void loadSuburb(){
-        try{
-            System.out.println("Loading suburb list...");
-            BufferedReader reader = new BufferedReader(new FileReader("src//suburb.csv"));
-            reader.readLine();
-            String line = null;
-            while((line=reader.readLine())!=null){
-                String item[] = line.split(",",2);
-                suburb_list.put(Integer.parseInt(item[0]),item[1]);
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println(suburb_list.get(3000));
     }
 
     public void register(){
@@ -98,7 +63,4 @@ public class RealEstate {
         }catch(Exception e){ System.out.println(e);}
 
     }
-
 }
-
-

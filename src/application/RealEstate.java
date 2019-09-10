@@ -49,8 +49,6 @@ public class RealEstate {
         String passWord = null;
         System.out.println("");
 
-
-
     }
 
 }

@@ -1,6 +1,7 @@
 package application;
 
 import java.io.FileNotFoundException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -19,8 +20,26 @@ public class RealEstate {
         LinkDatabase.connectJDBCToAWSEC2();
 
         loadSuburb();
+        
+        System.out.println("1.register\n" +"2.login");
+        int choice = sc.nextInt();
+        switch (choice){
+            case 1:
+                register();
+            case 2:
+                login();
+            
+        }
 
 
+    }
+
+    private void login() {
+        try {
+            LinkDatabase.logIn("duanxinhuan@163.com", "12345678");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     //this is connect class, this is used to connect to aws server where the database is built.
@@ -43,12 +62,37 @@ public class RealEstate {
         System.out.println(suburb_list.get(3000));
     }
 
-    public void register(){
+    public void register() {
         String custName = null;
         String emailAddress = null;
         String passWord = null;
-        System.out.println("");
+        String passWord2 = null;
+        System.out.println("enter your information to register");
+        Scanner scan = new Scanner(System.in);
+        System.out.println("enter your customer name");
+        custName = scan.next();
 
+        do {
+            System.out.println("enter your email address,email address must contain @ and.com");
+            emailAddress = scan.next();
+        }
+        while (!emailAddress.contains("@") || !emailAddress.contains(".com"));
+        System.out.println("create your password");
+        passWord = scan.next();
+        System.out.println("confirm your password");
+        passWord2 = scan.next();
+        while (!passWord.equals(passWord2)) {
+            System.out.println("password mismatch ");
+            System.out.println("enter your password again");
+            passWord = scan.next();
+            System.out.println("confirm your password");
+            passWord2 = scan.next();
+        }
+        System.out.println("register successfully");
+        System.out.println("here is your account details: ");
+        System.out.println("password length: " + (passWord.length()));
+        
+        LinkDatabase.register(passWord, custName, emailAddress);
     }
 
 }

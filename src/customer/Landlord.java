@@ -4,11 +4,9 @@ import property.Property;
 import property.RentalProperty;
 import property.Type;
 
-import java.util.ArrayList;
 
-public class Landlord extends Customers {
+public class Landlord extends VLCustomers {
 
-    private ArrayList<String> propertyList = new ArrayList<String>();
     int numOfRent = 0;
 
     public Landlord(String customerId, String passWord,String name, String emailAddress) {
@@ -19,7 +17,7 @@ public class Landlord extends Customers {
                                 int numOfBath, int numOfCarSpace, double weeklyRent, double acceptableDuration){
         Property property = new RentalProperty(id, address, suburbCode, propertyType,numOfBedroom,
                 numOfBath,numOfCarSpace, weeklyRent, acceptableDuration) ;
-        propertyList.add(id);
+        getPropertyList().add(id);
         return property;
     }
 }

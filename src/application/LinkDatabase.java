@@ -6,7 +6,7 @@ public class LinkDatabase {
 
 
     private static Connection connection = null;
-    private static Statement stmt;
+
 
     public LinkDatabase() throws SQLException {
     }
@@ -40,11 +40,6 @@ public class LinkDatabase {
         } else {
             System.out.println("FAILURE! Failed to make connection!");
         }
-        try {
-            stmt = connection.createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
     }
 
@@ -75,19 +70,31 @@ public class LinkDatabase {
         }catch(Exception e){ System.out.println(e);}
 
     }
-//    public static void test(){
-//        try{
-//            String emailAddress = "duanxinhuan@163.com";
-//        String sql = "select * from customer where customerId = "'+emailAddress+'"";
-//        ResultSet rs=stmt.executeQuery(sql);
-//        while(rs.next()){
-//            System.out.printf("%-28s", "Customer Id: ");
-//            System.out.printf(rs.getInt(1)+ "\n");
-//            System.out.printf("%-28s", "Customer Name: ");
-//            System.out.printf(rs.getString(3)+ "\n");
-//            System.out.printf("%-28s", "Email address ");
-//            System.out.printf(rs.getString(4)+ "\n");} }
-//        catch (Exception e){System.out.println(e);}
+
+    public static void logIn(String emailAddress, String passWord  ) throws SQLException {
+
+        String query = "select emailAddress from customer";
+        PreparedStatement preparedStmt = connection.prepareStatement(query);
+        ResultSet rs=preparedStmt.executeQuery();
+        while(rs.next()){
+            if(emailAddress.equals(rs.getString(1)))
+                break;
+
+            else
+                System.out.println("email doesn't exists");
+        }
+
+        preparedStmt = connection.prepareStatement("select passWord from customer where emailAddress = ?");
+        preparedStmt.setString(1,emailAddress);
+        rs = preparedStmt.executeQuery();
+        while(rs.next()){
+            if(passWord.equals(rs.getString(1))){
+                System.out.println("success！");
+            }
+        }
+
+    }
+//
 //    }
 
 }

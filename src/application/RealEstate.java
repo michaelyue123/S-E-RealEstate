@@ -1,5 +1,7 @@
 package application;
 
+import customer.*;
+
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -10,7 +12,7 @@ import java.util.Scanner;
 public class RealEstate {
     private HashMap<Integer, String> suburb_list = new HashMap<Integer, String>();
     private Scanner sc = new Scanner(System.in);
-
+    Customers current_customer;
 
     public RealEstate() {
 
@@ -23,24 +25,33 @@ public class RealEstate {
         
         System.out.println("1.register\n" +"2.login");
         int choice = sc.nextInt();
+
         switch (choice){
             case 1:
                 register();
+                break;
             case 2:
                 login();
+                break;
+            case 3:
+                System.out.println("See you next time!");
             
-        }
+        }while(choice !=3);
 
 
     }
 
     private void login() {
+        String customer_details;
         try {
-            LinkDatabase.logIn("duanxinhuan@163.com", "12345678");
+            customer_details =LinkDatabase.logIn("duanxinhuan@163.com", "12345678");
+            System.out.println(customer_details);
         } catch (SQLException e) {
             e.printStackTrace();
-        }
     }
+}
+
+   // login function
 
     //this is connect class, this is used to connect to aws server where the database is built.
 
@@ -59,7 +70,6 @@ public class RealEstate {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(suburb_list.get(3000));
     }
 
     public void register() {

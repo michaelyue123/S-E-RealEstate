@@ -1,4 +1,5 @@
 package application;
+import customer.Customers;
 
 import java.sql.*;
 
@@ -6,6 +7,7 @@ public class LinkDatabase {
 
 
     private static Connection connection = null;
+
 
 
     public LinkDatabase() throws SQLException {
@@ -71,7 +73,8 @@ public class LinkDatabase {
 
     }
 
-    public static void logIn(String emailAddress, String passWord  ) throws SQLException {
+    public static String logIn(String emailAddress, String passWord  ) throws SQLException {
+        String customer_details = null;
 
         String query = "select emailAddress from customer";
         PreparedStatement preparedStmt = connection.prepareStatement(query);
@@ -84,15 +87,21 @@ public class LinkDatabase {
                 System.out.println("email doesn't exists");
         }
 
-        preparedStmt = connection.prepareStatement("select passWord from customer where emailAddress = ?");
+        // login from database
+
+        preparedStmt = connection.prepareStatement("select * from customer where emailAddress = ?");
         preparedStmt.setString(1,emailAddress);
         rs = preparedStmt.executeQuery();
         while(rs.next()){
-            if(passWord.equals(rs.getString(1))){
+            if(passWord.equals(rs.getString(2))){
                 System.out.println("success！");
+                customer_details = rs.getInt(1) + "_" + rs.getString(2) + "_"
+                        +rs.getString(3) +"_" + rs.getString(4);
+
             }
         }
 
+        return customer_details;
     }
 //
 //    }

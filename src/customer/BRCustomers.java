@@ -1,8 +1,8 @@
 package customer;
 
-//this is customers tho wants to buy or rent a property
+//this is customer who wants to buy or rent a property
 public abstract class BRCustomers extends Customers {
-    private String[] suburbCodeList = new String[5];
+    private String[] suburbCodeList = new String[5]; 
 
     private  int numOfSuburb = 0;
 

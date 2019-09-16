@@ -26,7 +26,8 @@ public class RealEstate {
         System.out.println("1.register\n" +"2.login");
         int choice = sc.nextInt();
 
-        switch (choice){
+        do {
+         switch (choice){
             case 1:
                 register();
                 break;
@@ -36,7 +37,7 @@ public class RealEstate {
             case 3:
                 System.out.println("See you next time!");
             
-        }while(choice !=3);
+        } while(choice !=3);
 
 
     }
